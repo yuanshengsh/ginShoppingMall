@@ -1,0 +1,132 @@
+Server:
+  Port: ":8080"
+  AllowCrossDomain: true
+
+Token:
+  JwtTokenSignKey: "goskeleton"   #设置token生成时加密的签名
+  JwtTokenOnlineUsers: 10         #一个账号密码允许最大获取几个有效的token，当超过这个值，第一次获取的token的账号、密码就会失效
+  JwtTokenCreatedExpireAt: 28800      #创建时token默认有效秒数（token生成时间加上该时间秒数，算做有效期）,3600*8=28800 等于8小时
+  JwtTokenRefreshExpireAt: 36000      #对于过期的token，支持从相关接口刷新获取新的token，默认有效期为10个小时，3600*10=36000 等于10小时
+  BindContextKeyName: "userToken"     #用户在 header 头部提交的token绑定到上下文时的键名，方便直接从上下文(gin.context)直接获取每个用户的id等信息
+
+Log:
+  Path: "/Users/y/code/cxsd/ginShoppingMall/log"
+  Type: "file"
+  InfoName: "app.log"
+  ErrorName: "app-error.log"
+
+MySQL:
+  Host: "127.0.0.1"
+  Port: 3306
+  User: "root"
+  Pass: "123456"
+  DataBase: "cxsd"
+  Prefix: ""
+  Charset: "utf8"
+  SetMaxIdleConns: 10
+  SetMaxOpenConns: 128
+  SetConnMaxLifetime: 60    # 连接不活动时的最大生存时间(秒)
+  #ReConnectInterval: 1    # 保留项,重连数据库间隔秒数
+
+Redis:
+  Host: "127.0.0.1"
+  Port: 6379
+  Auth: ""
+  MaxIdle: 10
+  MaxActive: 1000
+  IdleTimeout: 60
+  IndexDb: 1
+  ConnFailRetryTimes: 3    #从连接池获取连接失败，最大重试次数
+  ReConnectInterval: 1     # 从连接池获取连接失败，每次重试之间间隔的秒数
+#Token:
+#  JwtTokenSignKey: "goskeleton"   #设置token生成时加密的签名
+#  JwtTokenOnlineUsers: 10         #一个账号密码允许最大获取几个有效的token，当超过这个值，第一次获取的token的账号、密码就会失效
+#  JwtTokenCreatedExpireAt: 28800      #创建时token默认有效秒数（token生成时间加上该时间秒数，算做有效期）,3600*8=28800 等于8小时
+#  JwtTokenRefreshExpireAt: 36000      #对于过期的token，支持从相关接口刷新获取新的token，默认有效期为10个小时，3600*10=36000 等于10小时
+#  BindContextKeyName: "userToken"     #用户在 header 头部提交的token绑定到上下文时的键名，方便直接从上下文(gin.context)直接获取每个用户的id等信息
+#
+#
+##  LOG_PATH = /data/log/logserver/
+##  LOG_TYPE = file
+##  LOG_INFO_NAME = service.log
+##  LOG_ERROR_NAME = service-error.log
+#
+#Redis:
+#  Host: "127.0.0.1"
+#  Port: 6379
+#  Auth: ""
+#  MaxIdle: 10
+#  MaxActive: 1000
+#  IdleTimeout: 60
+#  IndexDb: 1
+#  ConnFailRetryTimes: 3    #从连接池获取连接失败，最大重试次数
+#  ReConnectInterval: 1     # 从连接池获取连接失败，每次重试之间间隔的秒数
+#
+#Logs:
+#  GinLogName: "/storage/logs/gin.log"                  #设置 gin 框架的接口访问日志
+#  GoSkeletonLogName: "/storage/logs/goskeleton.log"    #设置GoSkeleton项目骨架运行时日志文件名，注意该名称不要与上一条重复 ,避免和 gin 框架的日志掺杂一起，造成混乱。
+#  TextFormat: "json"                                #记录日志的格式，参数选项：console、json ， console 表示一般的文本格式
+#  TimePrecision: "millisecond"                         #记录日志时，相关的时间精度，该参数选项：second  、 millisecond ， 分别表示 秒 和 毫秒 ,默认为毫秒级别
+#  MaxSize: 10                                           #每个日志的最大尺寸(以MB为单位）， 超过该值，系统将会自动进行切割
+#  MaxBackups: 7                                        #保留旧日志最大个数
+#  MaxAge: 15                                           #保留旧日志最大天数
+#  Compress: false                                      #日志备份时，是否进行压缩
+#
+##server:
+##  http:
+##    addr: 0.0.0.0:8000
+##    timeout: 1s
+##  grpc:
+##    addr: 0.0.0.0:9000
+##    timeout: 1s
+##data:
+##  database:
+##    driver: mysql
+##    source: root:password@tcp(127.0.0.1:3306)/testdb?parseTime=True
+##  redis:
+##    addr: 127.0.0.1:6379
+##    dial_timeout: 1s
+##    read_timeout: 0.4s
+##    write_timeout: 0.6s
+
+#App:
+#  AppDebug: true
+#  Port: ":8080"
+#  AllowCrossDomain: true
+#
+#  JwtTokenSignKey: "lpWY3c9OegAdFh7y"   #设置token生成时加密的签名
+#  JwtTokenOnlineUsers: 10         #一个账号密码允许最大获取几个有效的token，当超过这个值，第一次获取的token的账号、密码就会失效
+#  JwtTokenCreatedExpireAt: 28800      #创建时token默认有效秒数（token生成时间加上该时间秒数，算做有效期）,3600*8=28800 等于8小时
+#  JwtTokenRefreshExpireAt: 36000
+#
+#Admin:
+#  AppDebug: true
+#  Port: ":9090"
+#  AllowCrossDomain: true
+#  LogPath: "/Users/y/code/cxsd/ginShoppingMall/log"
+#  LogType: "file"
+#  LogInfoName: "admin.log"
+#  LogErrorName: "admin-error.log"
+#  JwtTokenSignKey: "lpWY3c9OegAdFh7y"   #设置token生成时加密的签名
+#  JwtTokenOnlineUsers: 10         #一个账号密码允许最大获取几个有效的token，当超过这个值，第一次获取的token的账号、密码就会失效
+#  JwtTokenCreatedExpireAt: 28800      #创建时token默认有效秒数（token生成时间加上该时间秒数，算做有效期）,3600*8=28800 等于8小时
+#  JwtTokenRefreshExpireAt: 36000
+
+#Redis:
+#  Host: "127.0.0.1"
+#  Port: 6379
+#  Auth: ""
+#  MaxIdle: 10
+#  MaxActive: 1000
+#  IdleTimeout: 60
+#  IndexDb: 0
+#  ConnFailRetryTimes: 3    #从连接池获取连接失败，最大重试次数
+#  ReConnectInterval: 1     # 从连接池获取连接失败，每次重试之间间隔的秒数
+
+#
+#Token:
+#  JwtTokenSignKey: "lpWY3c9OegAdFh7y"   #设置token生成时加密的签名
+#  JwtTokenOnlineUsers: 10         #一个账号密码允许最大获取几个有效的token，当超过这个值，第一次获取的token的账号、密码就会失效
+#  JwtTokenCreatedExpireAt: 28800      #创建时token默认有效秒数（token生成时间加上该时间秒数，算做有效期）,3600*8=28800 等于8小时
+#  JwtTokenRefreshExpireAt: 36000      #对于过期的token，支持从相关接口刷新获取新的token，默认有效期为10个小时，3600*10=36000 等于10小时
+##  BindContextKeyName: "userToken"     #用户在 header 头部提交的token绑定到上下文时的键名，方便直接从上下文(gin.context)直接获取每个用户的id等信息

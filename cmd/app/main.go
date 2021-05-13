@@ -12,10 +12,13 @@ import (
 )
 
 func main() {
+	boot.InitCommonConfig("app")
+
 	r := gin.Default()
 
 	// 加载中间件
-	r.Use(middleware.Cors(), middleware.JwtApp())
+	r.Use(middleware.Cors())
+	//r.Use(middleware.Cors(), middleware.JwtApp())
 
 	// 载入路由
 	r = router.AppRouter(r)
@@ -24,7 +27,7 @@ func main() {
 	endless.DefaultReadTimeOut = time.Second * 15
 	endless.DefaultWriteTimeOut = time.Second * 15
 
-	server := endless.NewServer(boot.Config.App.Port, r)
+	server := endless.NewServer(boot.Config.Server.Port, r)
 	//server.BeforeBegin = func(addr string) {
 	//	//log.Info("Actual pid is %d, listen %s", syscall.Getpid(), addr)
 	//}

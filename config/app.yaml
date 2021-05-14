@@ -16,20 +16,21 @@ Log:
   ErrorName: "app-error.log"
 
 MySQL:
-  Host: "127.0.0.1"
+  Host: "172.17.0.3"
   Port: 3306
   User: "root"
   Pass: "123456"
   DataBase: "cxsd"
   Prefix: ""
-  Charset: "utf8"
+  Charset: "utf8mb4"
   SetMaxIdleConns: 10
   SetMaxOpenConns: 128
   SetConnMaxLifetime: 60    # 连接不活动时的最大生存时间(秒)
   #ReConnectInterval: 1    # 保留项,重连数据库间隔秒数
 
+#REDIS_MAX_IDLE
 Redis:
-  Host: "127.0.0.1"
+  Host: "172.17.0.7"
   Port: 6379
   Auth: ""
   MaxIdle: 10

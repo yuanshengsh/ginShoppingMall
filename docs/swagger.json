@@ -1,0 +1,74 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "接口描述",
+        "title": "ginShoppingMall API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Cheney",
+            "url": "http://adaday.cn",
+            "email": "YuanShengSH@outlook.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": ":8080",
+    "basePath": "/api",
+    "paths": {
+        "/api/user/login": {
+            "post": {
+                "description": "用户/企业 登录",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "用户/企业 登录",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "/api/user/register": {
+            "post": {
+                "description": "用户/企业 注册",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "用户/企业 注册",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "手机号",
+                        "name": "mobile",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "path"
+                    }
+                ]
+            }
+        }
+    }
+}

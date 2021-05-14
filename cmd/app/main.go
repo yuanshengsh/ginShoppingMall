@@ -5,6 +5,7 @@ import (
 	boot "ginShoppingMall/bootstrap"
 	"ginShoppingMall/middleware"
 	"ginShoppingMall/router"
+	"ginShoppingMall/util"
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	"syscall"
@@ -13,12 +14,14 @@ import (
 
 func main() {
 	boot.InitCommonConfig("app")
+	boot.DB = util.StartMysql()
+	boot.RP = util.StartRedis()
 
 	r := gin.Default()
 
 	// 加载中间件
-	r.Use(middleware.Cors())
-	//r.Use(middleware.Cors(), middleware.JwtApp())
+	r.Use(middleware.Cors(), middleware.Recover())
+	//r.Use(middleware.Cors(), middleware.JwtApp(), middleware.Recover())
 
 	// 载入路由
 	r = router.AppRouter(r)

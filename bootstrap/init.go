@@ -2,7 +2,9 @@ package bootstrap
 
 import (
 	"fmt"
+	"github.com/gomodule/redigo/redis"
 	"gopkg.in/yaml.v2"
+	"gorm.io/gorm"
 	"io/ioutil"
 	"os"
 )
@@ -12,7 +14,11 @@ import (
  * 配置全局 Config
  */
 
-var Config = &Cfg{}
+var (
+	Config = &Cfg{}
+	DB     *gorm.DB
+	RP     *redis.Pool
+)
 
 type Cfg struct {
 	Server Server `yaml:"Server"`
@@ -42,17 +48,22 @@ type Token struct {
 }
 
 type MySQL struct {
-	Host     string `yaml:"host"`
+	Host     string `yaml:"Host"`
 	Port     string `yaml:"Port"`
 	User     string `yaml:"User"`
 	Pass     string `yaml:"Pass"`
 	DataBase string `yaml:"DataBase"`
+	Prefix   string `yaml:"Prefix"`
 }
 
 type Redis struct {
-	Host    string `yaml:"host"`
-	Port    string `yaml:"Port"`
-	IndexDb string `yaml:"IndexDb"`
+	Host        string `yaml:"Host"`
+	Port        string `yaml:"Port"`
+	Auth        string `yaml:"Auth"`
+	IndexDb     string `yaml:"IndexDb"`
+	MaxIdle     string `yaml:"MaxIdle"`
+	MaxActive   string `yaml:"MaxActive"`
+	IdleTimeout string `yaml:"IdleTimeout"`
 }
 
 func InitCommonConfig(env string) {

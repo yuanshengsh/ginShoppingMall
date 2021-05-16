@@ -65,22 +65,36 @@ var doc = `{
                 "summary": "用户/企业 注册",
                 "parameters": [
                     {
-                        "type": "integer",
                         "description": "手机号",
                         "name": "mobile",
-                        "in": "path"
+                        "in": "body",
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "用户名",
                         "name": "name",
-                        "in": "path"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "string",
                         "description": "密码",
                         "name": "password",
-                        "in": "path"
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "手机验证码",
+                        "name": "captcha",
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ]
             }

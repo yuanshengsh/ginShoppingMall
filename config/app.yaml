@@ -1,6 +1,7 @@
 Server:
   Port: ":8080"
   AllowCrossDomain: true
+  Slat: "#nHj@53mTHvDQYAI"
 
 Token:
   JwtTokenSignKey: "goskeleton"   #设置token生成时加密的签名

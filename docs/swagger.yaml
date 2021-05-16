@@ -33,17 +33,25 @@ paths:
       description: 用户/企业 注册
       parameters:
       - description: 手机号
-        in: path
+        in: body
         name: mobile
-        type: integer
+        schema:
+          type: integer
       - description: 用户名
-        in: path
+        in: body
         name: name
-        type: string
+        schema:
+          type: string
       - description: 密码
-        in: path
+        in: body
         name: password
-        type: string
+        schema:
+          type: string
+      - description: 手机验证码
+        in: body
+        name: captcha
+        schema:
+          type: string
       summary: 用户/企业 注册
       tags:
       - API USER 用户

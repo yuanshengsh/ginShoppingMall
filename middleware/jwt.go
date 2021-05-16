@@ -1,12 +1,10 @@
 package middleware
 
 import (
-	"errors"
-	"github.com/dgrijalva/jwt-go"
+	"ginShoppingMall/app/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
-	"time"
 )
 
 func JwtApp() gin.HandlerFunc {
@@ -34,7 +32,7 @@ func JwtApp() gin.HandlerFunc {
 			return
 		}
 		// parts[1]是获取到的tokenString，我们使用之前定义好的解析JWT的函数来解析它
-		mc, err := ParseToken(parts[1])
+		mc, err := service.ParseToken(parts[1])
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 2005,
@@ -44,47 +42,7 @@ func JwtApp() gin.HandlerFunc {
 			return
 		}
 		// 将当前请求的username信息保存到请求的上下文c上
-		c.Set("username", mc.Username)
+		c.Set("username", mc.UserName)
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
-}
-
-var MySecret = []byte("夏天夏天悄悄过去")
-
-type MyClaims struct {
-	Username string `json:"username"`
-	jwt.StandardClaims
-}
-
-const TokenExpireDuration = time.Hour * 2
-
-// GenToken 生成JWT
-func GenToken(username string) (string, error) {
-	// 创建一个我们自己的声明
-	c := MyClaims{
-		username, // 自定义字段
-		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(), // 过期时间
-			Issuer:    "my-project",                               // 签发人
-		},
-	}
-	// 使用指定的签名方法创建签名对象
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
-	// 使用指定的secret签名并获得完整的编码后的字符串token
-	return token.SignedString(MySecret)
-}
-
-// ParseToken 解析JWT
-func ParseToken(tokenString string) (*MyClaims, error) {
-	// 解析token
-	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(token *jwt.Token) (i interface{}, err error) {
-		return MySecret, nil
-	})
-	if err != nil {
-		return nil, err
-	}
-	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid { // 校验token
-		return claims, nil
-	}
-	return nil, errors.New("invalid token")
 }

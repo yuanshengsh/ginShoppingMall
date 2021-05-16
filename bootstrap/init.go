@@ -31,6 +31,7 @@ type Cfg struct {
 type Server struct {
 	Port             string `yaml:"Port"`
 	AllowCrossDomain bool   `yaml:"AllowCrossDomain"`
+	Salt             string `yaml:"Salt"`
 }
 
 type Log struct {

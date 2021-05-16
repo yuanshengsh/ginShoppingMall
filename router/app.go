@@ -18,9 +18,7 @@ func AppRouter(router *gin.Engine) *gin.Engine {
 		user := apis.Group("user/")
 		{
 			// 用户/企业 注册
-			user.POST("register", func(ctx *gin.Context) {
-				ctx.String(http.StatusOK, "login")
-			})
+			user.POST("register", app.Register)
 			// 用户/企业 登录
 			user.POST("login", app.Login)
 			// 用户/企业 刷新 token

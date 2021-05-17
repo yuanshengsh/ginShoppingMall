@@ -56,4 +56,7 @@ func CaptchaPic(c *gin.Context) {
 // @Tags API USER 用户
 // @Param mobile path int true "手机号"
 // @Param captcha path int true "图形验证码"
-func CaptchaSMS() {}
+func CaptchaSMS(c *gin.Context) {
+	//user_name := c.Get("user_name")
+	util.ResponseSuccess(c, "user_name")
+}

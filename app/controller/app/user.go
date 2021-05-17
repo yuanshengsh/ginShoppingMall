@@ -11,7 +11,7 @@ import (
 	"strconv"
 )
 
-// Register
+// UserRegister
 // @Router /api/user/register [post]
 // @Summary 用户注册
 // @Description 用户注册
@@ -20,8 +20,8 @@ import (
 // @Param name path string true "用户名"
 // @Param password path string true "密码"
 // @Param captcha path string true "手机验证码"
-func Register(c *gin.Context) {
-	params := &dto.RegisterInput{}
+func UserRegister(c *gin.Context) {
+	params := &dto.UserRegisterInput{}
 	if err := params.BindValidParam(c); err != nil {
 		util.ResponseError(c, 2000, err)
 		return
@@ -55,15 +55,15 @@ func Register(c *gin.Context) {
 	util.ResponseSuccess(c, "注册成功")
 }
 
-// Login
+// UserLogin
 // @Router /api/user/login [post]
 // @Summary 用户登录
 // @Description 用户登录
 // @Tags API USER 用户
 // @Param name path string true "用户名"
 // @Param password path string true "密码"
-func Login(c *gin.Context) {
-	params := &dto.LoginInput{}
+func UserLogin(c *gin.Context) {
+	params := &dto.UserLoginInput{}
 	if err := params.BindValidParam(c); err != nil {
 		util.ResponseError(c, 2000, err)
 		return
@@ -88,9 +88,19 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	output := dto.LoginOutput{
+	output := dto.UserLoginOutput{
 		AccessToken: "Bearer " + token,
 		ExpiresAt:   ut.ExpiresAt,
 	}
 	util.ResponseSuccess(c, output)
+}
+
+// UserInfo
+// @Router /api/user/info [get]
+// @Summary 获取用户信息
+// @Description 获取用户信息
+// @Tags API USER 用户
+func UserInfo(c *gin.Context) {
+	user_name,_ := c.Get("user_name")
+	util.ResponseSuccess(c, user_name)
 }

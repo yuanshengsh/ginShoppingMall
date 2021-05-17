@@ -55,5 +55,5 @@ func CaptchaPic(c *gin.Context) {
 // @Description 获取短信验证码
 // @Tags API USER 用户
 // @Param mobile path int true "手机号"
-// @Param captcha_pic path int true "图形验证码"
+// @Param captcha path int true "图形验证码"
 func CaptchaSMS() {}

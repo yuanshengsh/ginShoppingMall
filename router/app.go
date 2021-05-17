@@ -18,19 +18,10 @@ func AppRouter(router *gin.Engine) *gin.Engine {
 	router.GET("/api/captcha/pic", app.CaptchaPic)      // 获取图片验证码
 	router.POST("/api/captcha/sms", app.CaptchaSMS)     // 获取短信验证码
 
-	apis := router.Group("/api/", middleware.JwtApp())
+	apis := router.Group("/api", middleware.JwtApp())
 	{
-		// 用户接口
-		user := apis.Group("user/")
-		{
-			//// 获取用户信息
-			user.GET("info", app.UserInfo)
-		//	// 更新用户信息
-		//	user.GET("info", func(ctx *gin.Context) {
-		//		name, _ := ctx.Get("user_name")
-		//		ctx.String(http.StatusOK, "login3333")
-		//	})
-		}
+		apis.GET("/user", app.GetUser) // 获取用户信息
+		apis.PUT("/user", app.PutUser) // 更新用户信息
 
 		// 支付 接口
 

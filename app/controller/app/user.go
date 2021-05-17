@@ -95,12 +95,21 @@ func UserLogin(c *gin.Context) {
 	util.ResponseSuccess(c, output)
 }
 
-// UserInfo
-// @Router /api/user/info [get]
+// GetUser
+// @Router /api/user [get]
 // @Summary 获取用户信息
 // @Description 获取用户信息
 // @Tags API USER 用户
-func UserInfo(c *gin.Context) {
-	user_name,_ := c.Get("user_name")
+func GetUser(c *gin.Context) {
+	user_name, _ := c.Get("user_name")
 	util.ResponseSuccess(c, user_name)
+}
+
+// PutUser
+// @Router /api/user [put]
+// @Summary 获取用户信息
+// @Description 获取用户信息
+// @Tags API USER 用户
+func PutUser(c *gin.Context) {
+	util.ResponseSuccess(c, "PutUser")
 }

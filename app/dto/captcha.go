@@ -6,7 +6,7 @@ import (
 )
 
 type CaptchaPicInput struct {
-	Mobile int  `bson:"mobile" validate:"required"`
+	Mobile int `json:"mobile" form:"mobile" validate:"required"`
 	//Mobile int `json:"mobile" comment:"手机号" validate:"required"`
 }
 

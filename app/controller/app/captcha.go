@@ -10,8 +10,14 @@ import (
 	"image/png"
 )
 
-const CAPTCHA_PIC_TTL = 604800
+const CAPTCHA_PIC_TTL = 600 // 验证码生命周期 10 分钟
 
+// CaptchaPic
+// @Router /api/captcha/pic [get]
+// @Summary 图片验证码
+// @Description 图片验证码
+// @Tags API USER 用户
+// @Param mobile query int true "手机号"
 func CaptchaPic(c *gin.Context) {
 	params := &dto.CaptchaPicInput{}
 	if err := params.BindValidParam(c); err != nil {

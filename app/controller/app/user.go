@@ -13,13 +13,13 @@ import (
 
 // Register
 // @Router /api/user/register [post]
-// @Summary 用户/企业 注册
-// @Description 用户/企业 注册
+// @Summary 用户注册
+// @Description 用户注册
 // @Tags API USER 用户
-// @Param mobile body int false "手机号"
-// @Param name body string false "用户名"
-// @Param password body string false "密码"
-// @Param captcha body string false "手机验证码"
+// @Param mobile path int false "手机号"
+// @Param name path string false "用户名"
+// @Param password path string false "密码"
+// @Param captcha path string false "手机验证码"
 func Register(c *gin.Context) {
 	params := &dto.RegisterInput{}
 	if err := params.BindValidParam(c); err != nil {

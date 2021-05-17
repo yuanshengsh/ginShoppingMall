@@ -16,10 +16,10 @@ import (
 // @Summary 用户注册
 // @Description 用户注册
 // @Tags API USER 用户
-// @Param mobile path int false "手机号"
-// @Param name path string false "用户名"
-// @Param password path string false "密码"
-// @Param captcha path string false "手机验证码"
+// @Param mobile path int true "手机号"
+// @Param name path string true "用户名"
+// @Param password path string true "密码"
+// @Param captcha path string true "手机验证码"
 func Register(c *gin.Context) {
 	params := &dto.RegisterInput{}
 	if err := params.BindValidParam(c); err != nil {
@@ -60,8 +60,8 @@ func Register(c *gin.Context) {
 // @Summary 用户登录
 // @Description 用户登录
 // @Tags API USER 用户
-// @Param name path int false "用户名"
-// @Param password path int false "密码"
+// @Param name path string true "用户名"
+// @Param password path string true "密码"
 func Login(c *gin.Context) {
 	params := &dto.LoginInput{}
 	if err := params.BindValidParam(c); err != nil {

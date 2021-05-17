@@ -14,8 +14,8 @@ const CAPTCHA_PIC_TTL = 600 // 验证码生命周期 10 分钟
 
 // CaptchaPic
 // @Router /api/captcha/pic [get]
-// @Summary 图片验证码
-// @Description 图片验证码
+// @Summary 获取图片验证码
+// @Description 获取图片验证码
 // @Tags API USER 用户
 // @Param mobile query int true "手机号"
 func CaptchaPic(c *gin.Context) {
@@ -49,4 +49,11 @@ func CaptchaPic(c *gin.Context) {
 	png.Encode(c.Writer, img)
 }
 
+// CaptchaSMS
+// @Router /api/captcha/sms [post]
+// @Summary 获取短信验证码
+// @Description 获取短信验证码
+// @Tags API USER 用户
+// @Param mobile path int true "手机号"
+// @Param captcha_pic path int true "图形验证码"
 func CaptchaSMS() {}

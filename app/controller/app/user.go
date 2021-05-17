@@ -57,8 +57,8 @@ func Register(c *gin.Context) {
 
 // Login
 // @Router /api/user/login [post]
-// @Summary 用户/企业 登录
-// @Description 用户/企业 登录
+// @Summary 用户登录
+// @Description 用户登录
 // @Tags API USER 用户
 // @Param name path int false "用户名"
 // @Param password path int false "密码"

@@ -32,6 +32,7 @@ type Server struct {
 	Port             string `yaml:"Port"`
 	AllowCrossDomain bool   `yaml:"AllowCrossDomain"`
 	Salt             string `yaml:"Salt"`
+	Font             string `yaml:"Font"`
 }
 
 type Log struct {

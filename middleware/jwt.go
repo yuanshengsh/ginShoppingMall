@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"errors"
 	"ginShoppingMall/app/service"
+	"ginShoppingMall/util"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"strings"
 )
 
@@ -14,35 +15,27 @@ func JwtApp() gin.HandlerFunc {
 		// 这里的具体实现方式要依据你的实际业务情况决定
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 2003,
-				"msg":  "请求头中auth为空",
-			})
+			util.ResponseError(c, 401, errors.New("Unauthorized"))
 			c.Abort()
 			return
 		}
 		// 按空格分割
 		parts := strings.SplitN(authHeader, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 2004,
-				"msg":  "请求头中auth格式有误",
-			})
+			util.ResponseError(c, 401, errors.New("Unauthorized"))
 			c.Abort()
 			return
 		}
 		// parts[1]是获取到的tokenString，我们使用之前定义好的解析JWT的函数来解析它
 		mc, err := service.ParseToken(parts[1])
 		if err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 2005,
-				"msg":  "无效的Token",
-			})
+			util.ResponseError(c, 401, errors.New("Unauthorized"))
 			c.Abort()
 			return
 		}
 		// 将当前请求的username信息保存到请求的上下文c上
-		c.Set("username", mc.UserName)
+		c.Set("user_id", mc.UserId)
+		c.Set("user_name", mc.UserName)
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
 }

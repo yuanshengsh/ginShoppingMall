@@ -24,3 +24,7 @@ func SaveUserToken(ut *UserToken) error {
 	}
 	return nil
 }
+
+func (UserToken) TableName() string {
+	return "user_token"
+}

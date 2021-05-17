@@ -1,4 +1,4 @@
-package middleware
+package util
 
 import (
 	"encoding/json"
@@ -24,8 +24,6 @@ type Response struct {
 	ErrorCode ResponseCode `json:"errno"`
 	ErrorMsg  string       `json:"errmsg"`
 	Data      interface{}  `json:"data"`
-	//TraceId   interface{}  `json:"trace_id"`
-	//Stack     interface{}  `json:"stack"`
 }
 
 func ResponseError(c *gin.Context, code ResponseCode, err error) {

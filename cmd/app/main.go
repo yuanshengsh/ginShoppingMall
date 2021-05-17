@@ -21,7 +21,6 @@ func main() {
 
 	// 加载中间件
 	r.Use(middleware.Cors(), middleware.Recover())
-	//r.Use(middleware.Cors(), middleware.JwtApp(), middleware.Recover())
 
 	// 载入路由
 	r = router.AppRouter(r)

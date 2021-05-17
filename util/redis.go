@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+//var redisCon *redis.Pool
+
 func StartRedis() *redis.Pool {
 	redisMaxIdle, _ := strconv.Atoi(boot.Config.Redis.MaxIdle)
 	redisMaxActive, _ := strconv.Atoi(boot.Config.Redis.MaxActive)
@@ -31,4 +33,22 @@ func StartRedis() *redis.Pool {
 		},
 	}
 	return RedisClient
+}
+
+// Redis 操作
+
+func RedisCall(cmd string, args ...interface{}) (reply interface{}, err error) {
+	defer func() {
+		//if r := recover(); r != nil {
+		//	log.Error("RedisCall Recover r(%s)", r)
+		//}
+	}()
+	con := boot.RP.Get()
+	reply, err = con.Do(cmd, args...)
+	con.Close()
+	if err != nil {
+		//log.Error("RedisCall Do r(%s)", err)
+		return "", err
+	}
+	return reply, err
 }

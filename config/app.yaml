@@ -2,6 +2,8 @@ Server:
   Port: ":8080"
   AllowCrossDomain: true
   Slat: "#nHj@53mTHvDQYAI"
+  Font: "/Users/y/code/cxsd/ginShoppingMall/DejaVuSans.ttf"
+#  Font: "/usr/share/fonts/dejavu/DejaVuSans.ttf"
 
 Token:
   JwtTokenSignKey: "goskeleton"   #设置token生成时加密的签名
@@ -31,7 +33,7 @@ MySQL:
 
 #REDIS_MAX_IDLE
 Redis:
-  Host: "172.17.0.7"
+  Host: "172.17.0.6"
   Port: 6379
   Auth: ""
   MaxIdle: 10

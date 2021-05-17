@@ -27,6 +27,4 @@ func (param *LoginInput) BindValidParam(c *gin.Context) error {
 type LoginOutput struct {
 	AccessToken string `json:"access_token" form:"access_token"` //access_token
 	ExpiresAt   string `json:"expires_at" form:"expires_at"`     //expires_in
-	//TokenType   string `json:"token_type" form:"token_type"`     //token_type
-	//Scope       string `json:"scope" form:"scope"`               //scope
 }

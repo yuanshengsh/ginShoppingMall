@@ -6,7 +6,6 @@ import (
 	"ginShoppingMall/app/model"
 	"ginShoppingMall/app/service"
 	boot "ginShoppingMall/bootstrap"
-	"ginShoppingMall/middleware"
 	"ginShoppingMall/util"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -24,7 +23,7 @@ import (
 func Register(c *gin.Context) {
 	params := &dto.RegisterInput{}
 	if err := params.BindValidParam(c); err != nil {
-		middleware.ResponseError(c, 2000, err)
+		util.ResponseError(c, 2000, err)
 		return
 	}
 
@@ -33,14 +32,14 @@ func Register(c *gin.Context) {
 	// 检查手机号格式
 	mobile := strconv.Itoa(params.Mobile)
 	if false == util.ValidatorMobile(mobile) {
-		middleware.ResponseError(c, 2000, errors.New("不是正确的手机号"))
+		util.ResponseError(c, 2000, errors.New("不是正确的手机号"))
 		return
 	}
 
 	// 检查手机号是否已经注册过
 	model.FindUserByMobile(mobile, user)
 	if user.ID != 0 {
-		middleware.ResponseError(c, 2000, errors.New("该手机号已被注册"))
+		util.ResponseError(c, 2000, errors.New("该手机号已被注册"))
 		return
 	}
 
@@ -49,11 +48,11 @@ func Register(c *gin.Context) {
 	user.Password = util.GenSaltPassword(boot.Config.Server.Salt, params.Password)
 
 	if err := model.SaveUser(user); err != nil {
-		middleware.ResponseError(c, 2000, err)
+		util.ResponseError(c, 2000, err)
 		return
 	}
 
-	middleware.ResponseSuccess(c, "注册成功")
+	util.ResponseSuccess(c, "注册成功")
 }
 
 // Login
@@ -66,7 +65,7 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 	params := &dto.LoginInput{}
 	if err := params.BindValidParam(c); err != nil {
-		middleware.ResponseError(c, 2000, err)
+		util.ResponseError(c, 2000, err)
 		return
 	}
 
@@ -75,19 +74,23 @@ func Login(c *gin.Context) {
 	password := util.GenSaltPassword(boot.Config.Server.Salt, params.Password)
 	// 检查用户
 	model.FindUserLogin(params.Name, password, user)
-	if user.ID != 0 {
-		middleware.ResponseError(c, 2000, errors.New("账号错误，登录失败"))
+	if user.ID == 0 {
+		util.ResponseError(c, 2000, errors.New("账号错误，登录失败"))
 		return
 	}
 
 	ut := &model.UserToken{}
-	token, _ := service.GenToken(user.Mobile)
+	token, _ := service.GenToken(user.ID, user.Mobile)
 	ut.Token = token
-	model.SaveUserToken(ut)
+	ut.UserId = user.ID
+	if err := model.SaveUserToken(ut); err != nil {
+		util.ResponseError(c, 2000, err)
+		return
+	}
 
 	output := dto.LoginOutput{
 		AccessToken: "Bearer " + token,
 		ExpiresAt:   ut.ExpiresAt,
 	}
-	middleware.ResponseSuccess(c, output)
+	util.ResponseSuccess(c, output)
 }

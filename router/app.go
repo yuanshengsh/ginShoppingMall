@@ -32,7 +32,6 @@ func AppRouter(router *gin.Engine) *gin.Engine {
 
 		// 商品相关
 		apis.GET("/product/:ID", app.GetProduct)  // 获取商品信息
-		//apis.GET("/product/spec", app.GetProduct) // 获取商品规格
 
 		// 支付 接口
 

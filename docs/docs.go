@@ -33,70 +33,176 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/user/login": {
-            "post": {
-                "description": "用户/企业 登录",
+        "/api/captcha/pic": {
+            "get": {
+                "description": "获取图片验证码",
                 "tags": [
                     "API USER 用户"
                 ],
-                "summary": "用户/企业 登录",
+                "summary": "获取图片验证码",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "用户名",
-                        "name": "name",
-                        "in": "path"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "密码",
-                        "name": "password",
-                        "in": "path"
+                        "description": "手机号",
+                        "name": "mobile",
+                        "in": "query",
+                        "required": true
                     }
                 ]
             }
         },
-        "/api/user/register": {
+        "/api/captcha/sms": {
             "post": {
-                "description": "用户/企业 注册",
+                "description": "获取短信验证码",
                 "tags": [
                     "API USER 用户"
                 ],
-                "summary": "用户/企业 注册",
+                "summary": "获取短信验证码",
                 "parameters": [
                     {
+                        "type": "integer",
                         "description": "手机号",
                         "name": "mobile",
-                        "in": "body",
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "in": "path",
+                        "required": true
                     },
                     {
+                        "type": "integer",
+                        "description": "图形验证码",
+                        "name": "captcha",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/api/product": {
+            "get": {
+                "description": "商品信息",
+                "tags": [
+                    "API PRODUCT 商品"
+                ],
+                "summary": "商品信息"
+            }
+        },
+        "/api/product/spec": {
+            "get": {
+                "description": "商品信息",
+                "tags": [
+                    "API PRODUCT 商品"
+                ],
+                "summary": "商品信息"
+            }
+        },
+        "/api/user": {
+            "get": {
+                "description": "获取用户信息",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "获取用户信息"
+            },
+            "put": {
+                "description": "更新用户信息",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "更新用户信息"
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "description": "用户登录",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "type": "string",
                         "description": "用户名",
                         "name": "name",
-                        "in": "body",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     },
                     {
+                        "type": "string",
                         "description": "密码",
                         "name": "password",
-                        "in": "body",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/dto.UserLoginOutput"
                         }
+                    }
+                }
+            }
+        },
+        "/api/user/register": {
+            "post": {
+                "description": "用户注册",
+                "tags": [
+                    "API USER 用户"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "手机号",
+                        "name": "mobile",
+                        "in": "path",
+                        "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "手机验证码",
                         "name": "captcha",
-                        "in": "body",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
                         "schema": {
                             "type": "string"
                         }
                     }
-                ]
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.UserLoginOutput": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "description": "access_token",
+                    "type": "string"
+                },
+                "expires_at": {
+                    "description": "expires_in",
+                    "type": "string"
+                }
             }
         }
     }

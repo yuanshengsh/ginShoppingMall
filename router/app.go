@@ -20,8 +20,19 @@ func AppRouter(router *gin.Engine) *gin.Engine {
 
 	apis := router.Group("/api", middleware.JwtApp())
 	{
+		// 用户信息
 		apis.GET("/user", app.GetUser) // 获取用户信息
 		apis.PUT("/user", app.PutUser) // 更新用户信息
+
+		// 用户收货地址
+		apis.GET("/user/address", app.PutUser)    // 获取用户收货地址
+		apis.GET("/user/address/1", app.PutUser)  // 获取收货地址详情
+		apis.POST("/user/address/1", app.PutUser) // 添加收货地址
+		apis.PUT("/user/address/1", app.PutUser)  // 更新收货地址
+
+		// 商品相关
+		apis.GET("/product/:ID", app.GetProduct)  // 获取商品信息
+		//apis.GET("/product/spec", app.GetProduct) // 获取商品规格
 
 		// 支付 接口
 

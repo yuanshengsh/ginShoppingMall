@@ -1,4 +1,14 @@
 basePath: /api
+definitions:
+  dto.UserLoginOutput:
+    properties:
+      access_token:
+        description: access_token
+        type: string
+      expires_at:
+        description: expires_in
+        type: string
+    type: object
 host: :8080
 info:
   contact:
@@ -13,46 +23,110 @@ info:
   title: ginShoppingMall API
   version: "1.0"
 paths:
+  /api/captcha/pic:
+    get:
+      description: 获取图片验证码
+      parameters:
+      - description: 手机号
+        in: query
+        name: mobile
+        required: true
+        type: integer
+      summary: 获取图片验证码
+      tags:
+      - API USER 用户
+  /api/captcha/sms:
+    post:
+      description: 获取短信验证码
+      parameters:
+      - description: 手机号
+        in: path
+        name: mobile
+        required: true
+        type: integer
+      - description: 图形验证码
+        in: path
+        name: captcha
+        required: true
+        type: integer
+      summary: 获取短信验证码
+      tags:
+      - API USER 用户
+  /api/product:
+    get:
+      description: 商品信息
+      summary: 商品信息
+      tags:
+      - API PRODUCT 商品
+  /api/product/spec:
+    get:
+      description: 商品信息
+      summary: 商品信息
+      tags:
+      - API PRODUCT 商品
+  /api/user:
+    get:
+      description: 获取用户信息
+      summary: 获取用户信息
+      tags:
+      - API USER 用户
+    put:
+      description: 更新用户信息
+      summary: 更新用户信息
+      tags:
+      - API USER 用户
   /api/user/login:
     post:
-      description: 用户/企业 登录
+      description: 用户登录
       parameters:
       - description: 用户名
         in: path
         name: name
-        type: integer
+        required: true
+        type: string
       - description: 密码
         in: path
         name: password
-        type: integer
-      summary: 用户/企业 登录
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserLoginOutput'
+      summary: 用户登录
       tags:
       - API USER 用户
   /api/user/register:
     post:
-      description: 用户/企业 注册
+      description: 用户注册
       parameters:
       - description: 手机号
-        in: body
+        in: path
         name: mobile
-        schema:
-          type: integer
+        required: true
+        type: integer
       - description: 用户名
-        in: body
+        in: path
         name: name
-        schema:
-          type: string
+        required: true
+        type: string
       - description: 密码
-        in: body
+        in: path
         name: password
-        schema:
-          type: string
+        required: true
+        type: string
       - description: 手机验证码
-        in: body
+        in: path
         name: captcha
-        schema:
-          type: string
-      summary: 用户/企业 注册
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            type: string
+      summary: 用户注册
       tags:
       - API USER 用户
 swagger: "2.0"

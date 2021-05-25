@@ -20,6 +20,7 @@ import (
 // @Param name path string true "用户名"
 // @Param password path string true "密码"
 // @Param captcha path string true "手机验证码"
+// @Success 200 {object} Response "注册成功"
 func UserRegister(c *gin.Context) {
 	params := &dto.UserRegisterInput{}
 	if err := params.BindValidParam(c); err != nil {
@@ -62,6 +63,7 @@ func UserRegister(c *gin.Context) {
 // @Tags API USER 用户
 // @Param name path string true "用户名"
 // @Param password path string true "密码"
+// @Success 200 {object} dto.UserLoginOutput
 func UserLogin(c *gin.Context) {
 	params := &dto.UserLoginInput{}
 	if err := params.BindValidParam(c); err != nil {
@@ -107,8 +109,8 @@ func GetUser(c *gin.Context) {
 
 // PutUser
 // @Router /api/user [put]
-// @Summary 获取用户信息
-// @Description 获取用户信息
+// @Summary 更新用户信息
+// @Description 更新用户信息
 // @Tags API USER 用户
 func PutUser(c *gin.Context) {
 	util.ResponseSuccess(c, "PutUser")
